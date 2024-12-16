@@ -22,7 +22,8 @@ const userLogin = async (req, res) => {
           }
           const passwordMatch = await bcrypt.compare(password, user.password);
           if (!passwordMatch) {
-            return res.status(401).json({ error: 'Authentication failed' });
+            return res.status(401)
+            .json({ error: 'Authentication failed' });
           }
           const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: '1h',

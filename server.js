@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const usersRoutes = require("./routes/usersRoutes");
+const playlistRoutes = require("./routes/playlistRoutes");
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.use("/user", usersRoutes)
+app.use("/playlist", playlistRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, '172.16.5.32', () => console.log(`Server running on port ${PORT}`));

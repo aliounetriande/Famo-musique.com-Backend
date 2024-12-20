@@ -1,8 +1,10 @@
-const mongoose = require("mongoose");
-const express = require("express");
-const dotenv = require("dotenv");
-const cors = require("cors");
-const usersRoutes = require("./routes/usersRoutes");
+import mongoose from "mongoose";
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import usersRoutes from "./routes/usersRoutes.js";
+import playlistRoutes from "./routes/playlistRoutes.js";
+import authMiddleware from "./middlewares/authMiddleware.js";
 
 dotenv.config();
 
@@ -19,6 +21,8 @@ app.get('/', (req, res) => {
 })
 
 app.use("/user", usersRoutes)
+app.use("/user", authMiddleware)
+app.use("/user", playlistRoutes)
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '172.16.5.32', () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, 'localhost', () => console.log(`Server running on port ${PORT}`));

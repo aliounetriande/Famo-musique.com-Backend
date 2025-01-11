@@ -10,6 +10,9 @@ const addNewUser = async (req, res) => {
         firstname, lastname, email, password: hashedPassword
     })
     const savedUser = await user.save()
+    console.log('====================================');
+    console.log(savedUser);
+    console.log('====================================');
     res.status(201).json(savedUser)
 };
 
@@ -28,10 +31,12 @@ const userLogin = async (req, res) => {
           const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: '1h',
           });
-          res.status(200).json({ token, userId: user._id });
+          res.status(200).json({ token, user: user });
         } catch (error) {
           res.status(500).json({ error: error.message });
         }
       
   };
+
+  
 module.exports = {addNewUser, userLogin}

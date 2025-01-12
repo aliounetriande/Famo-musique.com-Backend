@@ -7,7 +7,7 @@ const addNewUser = async (req, res) => {
     const {firstname, lastname, email, password} = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User ({
-        firstname, lastname, email, password: hashedPassword
+        firstname: firstname, lastname: lastname, email: email, password: hashedPassword
     })
     const savedUser = await user.save()
     console.log('====================================');
@@ -29,9 +29,9 @@ const userLogin = async (req, res) => {
             .json({ error: 'Authentication failed' });
           }
           const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
+            expiresIn: '365d',
           });
-          res.status(200).json({ token, user: user });
+          res.status(200).json({ token: token, user: user });
         } catch (error) {
           res.status(500).json({ error: error.message });
         }

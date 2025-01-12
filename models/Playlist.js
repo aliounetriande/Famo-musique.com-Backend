@@ -4,6 +4,7 @@ const PlaylistSchema = new mongoose.Schema({
     desc : {type: String, required: true},
     image : {type: String, required: false},
     userId : {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    isFavorite: { type: Boolean, required: false }
 })
 
 module.exports = mongoose.model("Playlist", PlaylistSchema);

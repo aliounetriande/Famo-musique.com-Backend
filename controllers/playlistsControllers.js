@@ -106,5 +106,52 @@ const getPlaylists = async (req, res) => {
     }
 }
 
+const addPlaylistToFavorites = async (req, res) => {
+    try {
+        // const uId = req.header('userId');
+        const pId = req.header('playlistId');
+        const playlist = await Playlist.findByIdAndUpdate(
+            pId,
+            { isFavorite: true },
+            { new: true } 
+        )
+        if (!playlist) {
+            return res.status(404).json({ message: "Cette playlist n'existe pas" })
+        } else {
+            return res.status(200).json({ playlist })
+        }
 
-module.exports = {createPlaylist, updatePlaylist, deletePlaylist, getPlaylists, getOnePlaylist}
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const removePlaylistFromFavorites = async (req, res) => {
+    try {
+        // const uId = req.header('userId');
+        const pId = req.header('playlistId');
+        const playlist = await Playlist.findByIdAndUpdate(
+            pId,
+            { isFavorite: false },
+            { new: true } 
+        )
+        if (!playlist) {
+            return res.status(404).json({ message: "Cette playlist n'existe pas" })
+        } else {
+            return res.status(200).json({ playlist })
+        }
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+module.exports = {
+    createPlaylist, 
+    updatePlaylist, 
+    deletePlaylist, 
+    getPlaylists, 
+    getOnePlaylist,
+    addPlaylistToFavorites,
+    removePlaylistFromFavorites
+}
